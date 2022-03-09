@@ -118,8 +118,13 @@ Hero.prototype._getAnimationName = function () {
 };
 
 // Startscreen Text
-var startText = "Bienvenue!";
-var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
+var startText = "The Jungle View";
+
+var startStyle = { font: "Impact", fontSize: "65px", fill: "#ffa200", stroke: "black", strokeThickness: "1", align: "center" };
+
+//First Mini game text
+var firstText = "Vous vous retrouvez face à un choix.\nChoisissez la clé qui correspond aux ronds que vous percevez les plus noirs.\nPrenez les deux clés si vous ne voyez pas de différence.";
+var firstStyle = { font: "Impact", fontSize:"19px", fill: "#ffa200",align: "center", backgroundColor: "rgba(0,0,0,0.7)", wordWrapWidth: "200" };
 
 //
 // Spider (enemy)
@@ -418,7 +423,10 @@ PlayState._loadLevel = function (data) {
     this.enemyWalls.visible = false;
 
     //Welcome text on first level
-    if(this.level == 0) {this.startText = this.game.add.text(305, 150, startText, style);}
+    if(this.level == 0) {this.startText = this.game.add.text(270, 50, startText, startStyle);}
+
+    //Text on first Minigame
+    if(this.level == 1) {this.firstText = this.game.add.text(200, 0, firstText, firstStyle);}
 
     // spawn hero and enemies
     this._spawnCharacters({ hero: data.hero, spiders: data.spiders });
@@ -436,7 +444,7 @@ PlayState._loadLevel = function (data) {
     data.coins.forEach(this._spawnCoin, this);
     if(this.level == 1){
         this._spawnKey(data.key.x, data.key.y, 'key_grey');
-        this._spawnKey(data.key_grey.x, data.key_grey.y, 'key_grey');
+        this._spawnKey2(data.key_grey.x, data.key_grey.y, 'key_grey');
     }else{
     this._spawnKey(data.key.x, data.key.y, 'key');
     }
