@@ -1,3 +1,4 @@
+let data = "Results: \n"
 // =============================================================================
 // Sprites
 // =============================================================================
@@ -224,6 +225,10 @@ LoadingState.preload = function () {
     this.game.load.audio('bgm', ['audio/bgm.mp3', 'audio/bgm.ogg']);
 };
 
+//Checks for stats (Yes we know this code is getting really disgusting. We are sorry 💔)
+keyGreenPicked = false;
+keyRedPicked = false;
+
 LoadingState.create = function () {
     this.game.state.start('play', true, false, { level: 0 });
 };
@@ -294,8 +299,24 @@ PlayState._handleCollisions = function () {
     this.game.physics.arcade.overlap(this.hero, this.coins, this._onHeroVsCoin,
         null, this);
     // hero vs key (pick up)
-    this.game.physics.arcade.overlap(this.hero, this.key, this._onHeroVsKey,
-        null, this);
+    if(this.level == 1 && this.game.physics.arcade.overlap(this.hero, this.key, this._onHeroVsKey,
+        null, this)){
+            data += "Key Red picked";
+            console.log("Key Red picked");
+            keyRedPicked = true;
+        }
+    if(this.level == 1 && this.game.physics.arcade.overlap(this.hero, this.key_grey, this._onHeroVsKey,
+        null, this)){
+            data += "Key Green picked";
+            console.log("Key Green picked");
+            keyGreenPicked = true;
+
+        }
+    else{
+        this.game.physics.arcade.overlap(this.hero, this.key, this._onHeroVsKey,
+            null, this);
+    } 
+        
     // hero vs door (end level)
     this.game.physics.arcade.overlap(this.hero, this.door, this._onHeroVsDoor,
         // ignore if there is no key or the player is on air
@@ -486,6 +507,21 @@ PlayState._spawnKey = function (x, y, keyImage) {
     this.key.y -= 3;
     this.game.add.tween(this.key)
         .to({ y: this.key.y + 6 }, 800, Phaser.Easing.Sinusoidal.InOut)
+        .yoyo(true)
+        .loop()
+        .start();
+};
+PlayState._spawnKey2 = function (x, y, keyImage) {
+    this.key_grey = this.bgDecoration.create(x, y, keyImage);
+    this.key_grey.anchor.set(0.5, 0.5);
+    // enable physics to detect collisions, so the hero can pick the key up
+    this.game.physics.enable(this.key_grey);
+    this.key_grey.body.allowGravity = false;
+
+    // add a small 'up & down' animation via a tween
+    this.key_grey.y -= 3;
+    this.game.add.tween(this.key_grey)
+        .to({ y: this.key_grey.y + 6 }, 800, Phaser.Easing.Sinusoidal.InOut)
         .yoyo(true)
         .loop()
         .start();
