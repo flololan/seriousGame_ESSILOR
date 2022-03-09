@@ -116,6 +116,10 @@ Hero.prototype._getAnimationName = function () {
     return name;
 };
 
+// Startscreen Text
+var startText = "Bienvenue!";
+var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
+
 //
 // Spider (enemy)
 //
