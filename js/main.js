@@ -126,6 +126,10 @@ var startStyle = { font: "Impact", fontSize: "65px", fill: "#ffa200", stroke: "b
 var firstText = "Vous vous retrouvez face à un choix.\nChoisissez la clé qui correspond aux ronds que vous percevez les plus noirs.\nPrenez les deux clés si vous ne voyez pas de différence.";
 var firstStyle = { font: "Impact", fontSize: "19px", fill: "#ffa200", align: "center", backgroundColor: "rgba(0,0,0,0.7)", wordWrapWidth: "200" };
 
+//Second Mini game text
+var secondText = "La porte est fermée!\nTrouvez le bon code pour obtenir la clé!.";
+var secondStyle = { font: "Impact", fontSize: "25px", fill: "#ffa200", align: "center", backgroundColor: "rgba(0,0,0,0.7)", wordWrapWidth: "200" };
+
 //Alex
 var lastText = "Félicitations, vous avez trouvé le trésor !\n Voici vos résultats :\n Score : 340 \n Vous avez choisi la clé verte, cela peut être un problème de myopie, \n aller conntacter votre ophtalmologue. \n Vous avez trouvé tous les numéros du test de daltonisme, félicitations. \n N'hésitez pas à prendre rendez-vous chez un spécialiste afin de confirmer ces resultats.\n Pour plus d'information, vous pouvez consulté le site d'Essilor. \n N'hésitez à partager votre score avec vos amis";
 var lastStyle = { font: "Impact", fontSize: "19px", fill: "#ffa200", align: "center", backgroundColor: "rgba(0,0,0,0.7)", wordWrapWidth: "200" };
@@ -310,7 +314,7 @@ PlayState.init = function (data) {
 
     this.coinPickupCount = 0;
     this.hasKey = false;
-    this.level = (data.level || 0) % LEVEL_COUNT;
+    this.level = (data.level || 3) % LEVEL_COUNT;
 };
 
 PlayState.create = function () {
@@ -545,6 +549,9 @@ PlayState._loadLevel = function (data) {
 
     //Text on first Minigame
     if (this.level == 1) { this.firstText = this.game.add.text(200, 0, firstText, firstStyle); }
+
+    //Text on second minigame
+    if(this.level == 3) { this.secondText = this.game.add.text(300,20, secondText, secondStyle);}
 
     // spawn hero and enemies
     this._spawnCharacters({ hero: data.hero, spiders: data.spiders });
