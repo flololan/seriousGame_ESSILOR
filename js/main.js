@@ -193,11 +193,11 @@ LoadingState.preload = function () {
     this.game.load.image('icon:coin', 'images/coin_icon.png');
 
     //loading backgrounds
-    this.game.load.image('background', 'images/background.png');
     this.game.load.image('background0', 'images/background_0.png');
     this.game.load.image('background1', 'images/background_1.png');
     this.game.load.image('background2', 'images/background_2.png');
-    this.game.load.image('background3', 'images/background_3.png');
+    this.game.load.image('background3', 'images/background.png');
+    this.game.load.image('background4', 'images/background_3.png');
 
     //loading first game element
     this.game.load.image('game1', 'images/game_1.png');
@@ -244,7 +244,7 @@ LoadingState.create = function () {
 
 PlayState = {};
 
-const LEVEL_COUNT = 4;
+const LEVEL_COUNT = 5;
 
 PlayState.init = function (data) {
     this.keys = this.game.input.keyboard.addKeys({
