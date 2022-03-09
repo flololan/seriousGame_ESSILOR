@@ -254,6 +254,9 @@ LoadingState.preload = function () {
     this.game.load.image('key', 'images/key.png');
     this.game.load.image('key_grey', 'images/key_grey.png');
 
+    this.game.load.image('chest-open', 'images/coffre_ouvert_resize.png', 42, 66);
+    this.game.load.image('chest', 'images/coffre_ferme_resize.png', 42, 66);
+
 
 
     this.game.load.spritesheet('decoration', 'images/decor.png', 42, 42);
@@ -261,7 +264,7 @@ LoadingState.preload = function () {
     this.game.load.spritesheet('coin', 'images/coin_animated.png', 22, 22);
     this.game.load.spritesheet('spider', 'images/spider.png', 42, 32);
     this.game.load.spritesheet('door', 'images/door.png', 42, 66);
-    this.game.load.spritesheet('chest', 'images/coffre_ouvert_resize.png', 42, 66);
+    //this.game.load.spritesheet('chest', 'images/coffre_ouvert_resize.png', 42, 66);
     this.game.load.spritesheet('icon:key', 'images/key_icon.png', 34, 30);
 
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
@@ -463,8 +466,9 @@ PlayState._onHeroVsDoor = function (hero, door) {
 
 //Alex
 PlayState._onHeroVsChest = function (hero, chest) {
-    // 'open' the door by changing its graphic and playing a sfx
-    chest.frame = 1;
+    // 'open' the chest by changing its graphic and playing a sfx
+    //chest.frame = 1;
+    chest.loadTexture('chest-open');
 
     // play 'enter door' animation and change to the next level when it ends
     hero.freeze();
