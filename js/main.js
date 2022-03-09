@@ -178,11 +178,19 @@ LoadingState.init = function () {
 LoadingState.preload = function () {
     this.game.load.json('level:0', 'data/level00.json');
     this.game.load.json('level:1', 'data/level01.json');
+    this.game.load.json('level:2', 'data/level02.json');
+    this.game.load.json('level:3', 'data/level03.json');
 
     this.game.load.image('font:numbers', 'images/numbers.png');
 
     this.game.load.image('icon:coin', 'images/coin_icon.png');
+
+    //loading backgrounds
     this.game.load.image('background', 'images/background.png');
+    this.game.load.image('background0', 'images/background_0.png');
+    this.game.load.image('background1', 'images/background_1.png');
+    this.game.load.image('background2', 'images/background_2.png');
+    this.game.load.image('background3', 'images/background_3.png');
     this.game.load.image('invisible-wall', 'images/invisible_wall.png');
     this.game.load.image('ground', 'images/ground.png');
     this.game.load.image('grass:8x1', 'images/grass_8x1.png');
@@ -217,7 +225,7 @@ LoadingState.create = function () {
 
 PlayState = {};
 
-const LEVEL_COUNT = 2;
+const LEVEL_COUNT = 4;
 
 PlayState.init = function (data) {
     this.keys = this.game.input.keyboard.addKeys({
@@ -247,8 +255,9 @@ PlayState.create = function () {
     this.bgm.loopFull();
 
     // create level entities and decoration
-    this.game.add.image(0, 0, 'background');
+    this.game.add.image(0, 0, `background${this.level}`);
     this._loadLevel(this.game.cache.getJSON(`level:${this.level}`));
+    console.log(this.level);
 
     // create UI score boards
     this._createHud();
