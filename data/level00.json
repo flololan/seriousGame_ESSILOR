@@ -1,7 +1,6 @@
 {
     "platforms": [
-        {"image": "ground", "x": 0, "y": 546},
-        {"image": "grass:4x1", "x": 420, "y": 420}
+        {"image": "ground", "x": 0, "y": 546}
     ],
     "decoration": [
         {"frame": 2, "x": 630, "y": 504},
@@ -20,6 +19,6 @@
     "hero": {"x": 21, "y": 525},
     "spiders": [
     ],
-    "door": {"x": 231, "y": 546},
-    "key": {"x": 525, "y": 336}
+    "door": {"x": 935, "y": 546},
+    "key": {"x": 525, "y": 526}
 }
