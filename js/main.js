@@ -199,9 +199,8 @@ LoadingState.preload = function () {
     this.game.load.image('background0', 'images/background_0.png');
     this.game.load.image('background1', 'images/background_1.png');
     this.game.load.image('background2', 'images/background_2.png');
-    this.game.load.image('background3', 'images/background.png');
-    this.game.load.image('background4', 'images/background_3.png');
-    this.game.load.image('background5', 'images/background_5.png');
+    this.game.load.image('background3', 'images/background_3.png');
+    this.game.load.image('background4', 'images/background.png');
 
     //loading first game element
     this.game.load.image('game1', 'images/game_1.png');
@@ -237,6 +236,8 @@ LoadingState.preload = function () {
     this.game.load.image('game2_test1', 'images/game_2_test_1.png');
     this.game.load.image('game2_test2', 'images/game_2_test_2.png');
     this.game.load.image('game2_test3', 'images/game_2_test_3.png');
+
+    this.game.load.image('game2_background', 'images/test_background.png')
 
 
     this.game.load.image('invisible-wall', 'images/invisible_wall.png');
@@ -494,31 +495,38 @@ PlayState._loadLevel = function (data) {
     if (this.level == 3) {
         //test 1 buttons
         button11 = this.game.add.button(235, 300, 'game2Button1-1', buttonClick(), this);
-        button11.onInputDown.add(() => down(1, 1, button11), this);
+        button11.onInputDown.add(() => down(1, 1, button11, data, this), this);
         button12 = this.game.add.button(285, 300, 'game2Button1-2', buttonClick(), this);
-        button12.onInputDown.add(() => down(1, 2, button12), this);
+        button12.onInputDown.add(() => down(1, 2, button12, data, this), this);
         button13 = this.game.add.button(335, 300, 'game2Button1-3', buttonClick(), this);
-        button13.onInputDown.add(() => down(1, 3, button13), this);
+        button13.onInputDown.add(() => down(1, 3, button13, data, this), this);
 
         //test 2 buttons
         button21 = this.game.add.button(435, 300, 'game2Button2-1', buttonClick(), this);
-        button21.onInputDown.add(() => down(2, 1, button21), this);
+        button21.onInputDown.add(() => down(2, 1, button21, data, this), this);
         button22 = this.game.add.button(485, 300, 'game2Button2-2', buttonClick(), this);
-        button22.onInputDown.add(() => down(2, 2, button22), this);
+        button22.onInputDown.add(() => down(2, 2, button22, data, this), this);
         button23 = this.game.add.button(535, 300, 'game2Button2-3', buttonClick(), this);
-        button23.onInputDown.add(() => down(2, 3, button23), this);
+        button23.onInputDown.add(() => down(2, 3, button23, data, this), this);
 
         //test 3 buttons
         button31 = this.game.add.button(635, 300, 'game2Button3-1', buttonClick(), this);
-        button31.onInputDown.add(() => down(3, 1, button31), this);
+        button31.onInputDown.add(() => down(3, 1, button31, data, this), this);
         button32 = this.game.add.button(685, 300, 'game2Button3-2', buttonClick(), this);
-        button32.onInputDown.add(() => down(3, 2, button32), this);
+        button32.onInputDown.add(() => down(3, 2, button32, data, this), this);
         button33 = this.game.add.button(735, 300, 'game2Button3-3', buttonClick(), this);
-        button33.onInputDown.add(() => down(3, 3, button33), this);
+        button33.onInputDown.add(() => down(3, 3, button33, data, this), this);
 
+        //background
+        this.game.add.image(210, 110, 'game2_background');
+        this.game.add.image(410, 110, 'game2_background');
+        this.game.add.image(610, 110, 'game2_background');
+
+        //tests
         this.game.add.image(200, 100, 'game2_test1');
         this.game.add.image(400, 100, 'game2_test2');
         this.game.add.image(600, 100, 'game2_test3');
+
 
 
 
@@ -548,7 +556,9 @@ PlayState._loadLevel = function (data) {
         this._spawnKey(data.key.x, data.key.y, 'key_grey');
         this._spawnKey2(data.key_grey.x, data.key_grey.y, 'key_grey');
     } else {
-        this._spawnKey(data.key.x, data.key.y, 'key');
+        if (this.level != 3) {
+            this._spawnKey(data.key.x, data.key.y, 'key'); ``
+        }
     }
 
 
@@ -688,9 +698,7 @@ function buttonClick() {
 
 }
 
-function down(test, button, buttonObject) {
-    `background${this.level}`
-
+function down(test, button, buttonObject, data, playstateInstance) {
     buttonObject.loadTexture(`game2Button${test}-${button}-down`);
 
     if (test == 1) {
@@ -718,6 +726,10 @@ function down(test, button, buttonObject) {
     }
     else {
         console.log("Wait! This is illegal?! 🤔");
+    }
+
+    if (game2Q1Clicked == true && game2Q2Clicked == true && game2Q3Clicked == true) {
+        playstateInstance._spawnKey(data.key.x, data.key.y, 'key');
     }
 }
 
