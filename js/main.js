@@ -204,6 +204,38 @@ LoadingState.preload = function () {
     //loading first game element
     this.game.load.image('game1', 'images/game_1.png');
 
+    //loading buttons for second game element
+    this.game.load.image('game2Button1-1', 'images/game_2_Button_1_1.png');
+    this.game.load.image('game2Button1-2', 'images/game_2_Button_1_2.png');
+    this.game.load.image('game2Button1-3', 'images/game_2_Button_1_3.png');
+
+    this.game.load.image('game2Button2-1', 'images/game_2_Button_2_1.png');
+    this.game.load.image('game2Button2-2', 'images/game_2_Button_2_2.png');
+    this.game.load.image('game2Button2-3', 'images/game_2_Button_2_3.png');
+
+    this.game.load.image('game2Button3-1', 'images/game_2_Button_3_1.png');
+    this.game.load.image('game2Button3-2', 'images/game_2_Button_3_2.png');
+    this.game.load.image('game2Button3-3', 'images/game_2_Button_3_3.png');
+
+    //loading pressed buttons for second gam element
+
+    this.game.load.image('game2Button1-1-down', 'images/game_2_Button_1_1_down.png');
+    this.game.load.image('game2Button1-2-down', 'images/game_2_Button_1_2_down.png');
+    this.game.load.image('game2Button1-3-down', 'images/game_2_Button_1_3_down.png');
+
+    this.game.load.image('game2Button2-1-down', 'images/game_2_Button_2_1_down.png');
+    this.game.load.image('game2Button2-2-down', 'images/game_2_Button_2_2_down.png');
+    this.game.load.image('game2Button2-3-down', 'images/game_2_Button_1_3_down.png');
+
+    this.game.load.image('game2Button3-1-down', 'images/game_2_Button_3_1_down.png');
+    this.game.load.image('game2Button3-2-down', 'images/game_2_Button_2_2_down.png');
+    this.game.load.image('game2Button3-3-down', 'images/game_2_Button_1_3_down.png');
+
+    //loading images for second game element
+    this.game.load.image('game2_test1', 'images/game_2_test_1.png');
+    this.game.load.image('game2_test2', 'images/game_2_test_2.png');
+    this.game.load.image('game2_test3', 'images/game_2_test_3.png');
+
 
     this.game.load.image('invisible-wall', 'images/invisible_wall.png');
     this.game.load.image('ground', 'images/ground.png');
@@ -235,6 +267,16 @@ LoadingState.preload = function () {
 //Checks for stats (Yes we know this code is getting really disgusting. We are sorry 💔)
 keyGreenPicked = false;
 keyRedPicked = false;
+
+game2Q1Correct = false;
+game2Q2Correct = false;
+game2Q3Correct = false;
+
+game2Q1Clicked = false;
+game2Q2Clicked = false;
+game2Q3Clicked = false;
+
+
 
 LoadingState.create = function () {
     this.game.state.start('play', true, false, { level: 0 });
@@ -424,6 +466,42 @@ PlayState._loadLevel = function (data) {
     this.enemyWalls = this.game.add.group();
     this.enemyWalls.visible = false;
 
+    //Level 3 render
+    if (this.level == 3){
+        //test 1 buttons
+        button11 = this.game.add.button(235,300, 'game2Button1-1', buttonClick(), this);
+        button11.onInputDown.add(() => down(1,1, button11), this);
+        button12 = this.game.add.button(285,300, 'game2Button1-2', buttonClick(), this);
+        button12.onInputDown.add(() => down(1,2, button12), this);
+        button13 = this.game.add.button(335,300, 'game2Button1-3', buttonClick(), this);
+        button13.onInputDown.add(() => down(1,3, button13), this);
+
+        //test 2 buttons
+        button21 = this.game.add.button(435,300, 'game2Button2-1', buttonClick(), this);
+        button21.onInputDown.add(() => down(2,1, button21), this);
+        button22 = this.game.add.button(485,300, 'game2Button2-2', buttonClick(), this);
+        button22.onInputDown.add(() => down(2,2, button22), this);
+        button23 = this.game.add.button(535,300, 'game2Button2-3', buttonClick(), this);
+        button23.onInputDown.add(() => down(2,3, button23), this);
+
+        //test 3 buttons
+        button31 = this.game.add.button(635,300, 'game2Button3-1', buttonClick(), this);
+        button31.onInputDown.add(() => down(3,1, button31), this);
+        button32 = this.game.add.button(685,300, 'game2Button3-2', buttonClick(), this);
+        button32.onInputDown.add(() => down(3,2, button32), this);
+        button33 = this.game.add.button(735,300, 'game2Button3-3', buttonClick(), this);
+        button33.onInputDown.add(() => down(3,3, button33), this);
+
+        this.game.add.image(200,100, 'game2_test1');
+        this.game.add.image(400,100, 'game2_test2');
+        this.game.add.image(600,100, 'game2_test3');
+
+
+
+    }
+
+ 
+
     //Welcome text on first level
     if(this.level == 0) {this.startText = this.game.add.text(270, 50, startText, startStyle);}
 
@@ -563,6 +641,45 @@ PlayState._createHud = function () {
     this.hud.add(this.keyIcon);
     this.hud.position.set(10, 10);
 };
+
+//Function is called on button click on lvl 3
+//To-Do define correct buttons
+function buttonClick () {
+
+}
+
+function down(test, button, buttonObject){
+    `background${this.level}`
+
+    buttonObject.loadTexture(`game2Button${test}-${button}-down`);
+
+    if (test == 1){
+        if (button == 2){
+        game2Q1Correct = true;
+        console.log("Correct");
+        }
+        game2Q1Clicked = true;
+    }
+    else if(test == 2){
+        if (button == 1){
+            game2Q2Correct = true;
+        console.log("Correct");
+
+            }
+        game2Q2Clicked = true;
+    }
+    else if(test == 3){
+        if (button == 1){
+            game2Q3Correct = true;
+        console.log("Correct");
+
+            }
+        game2Q3Clicked = true;
+    }
+    else{
+        console.log("Wait! This is illegal?! 🤔");
+    }
+}
 
 // =============================================================================
 // entry point
