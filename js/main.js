@@ -314,7 +314,7 @@ PlayState.init = function (data) {
 
     this.coinPickupCount = 0;
     this.hasKey = false;
-    this.level = (data.level || 3) % LEVEL_COUNT;
+    this.level = (data.level || 0) % LEVEL_COUNT;
 };
 
 PlayState.create = function () {
