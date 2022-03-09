@@ -181,6 +181,7 @@ LoadingState.preload = function () {
     this.game.load.json('level:2', 'data/level02.json');
     this.game.load.json('level:3', 'data/level03.json');
 
+
     this.game.load.image('font:numbers', 'images/numbers.png');
 
     this.game.load.image('icon:coin', 'images/coin_icon.png');
@@ -191,6 +192,11 @@ LoadingState.preload = function () {
     this.game.load.image('background1', 'images/background_1.png');
     this.game.load.image('background2', 'images/background_2.png');
     this.game.load.image('background3', 'images/background_3.png');
+
+    //loading first game element
+    this.game.load.image('game1', 'images/game_1.png');
+
+
     this.game.load.image('invisible-wall', 'images/invisible_wall.png');
     this.game.load.image('ground', 'images/ground.png');
     this.game.load.image('grass:8x1', 'images/grass_8x1.png');
@@ -199,6 +205,9 @@ LoadingState.preload = function () {
     this.game.load.image('grass:2x1', 'images/grass_2x1.png');
     this.game.load.image('grass:1x1', 'images/grass_1x1.png');
     this.game.load.image('key', 'images/key.png');
+    this.game.load.image('key_grey', 'images/key_grey.png');
+
+
 
     this.game.load.spritesheet('decoration', 'images/decor.png', 42, 42);
     this.game.load.spritesheet('hero', 'images/hero.png', 36, 42);
@@ -376,6 +385,9 @@ PlayState._goToNextLevel = function () {
 };
 
 PlayState._loadLevel = function (data) {
+    //First game element (needs to be first to be in the background)
+    if(this.level == 1) {this.game.add.image(245, 80, 'game1')}
+    
     // create all the groups/layers that we need
     this.bgDecoration = this.game.add.group();
     this.platforms = this.game.add.group();
@@ -383,6 +395,9 @@ PlayState._loadLevel = function (data) {
     this.spiders = this.game.add.group();
     this.enemyWalls = this.game.add.group();
     this.enemyWalls.visible = false;
+
+    //Welcome text on first level
+    if(this.level == 0) {this.startText = this.game.add.text(305, 150, startText, style);}
 
     // spawn hero and enemies
     this._spawnCharacters({ hero: data.hero, spiders: data.spiders });
@@ -398,7 +413,12 @@ PlayState._loadLevel = function (data) {
 
     // spawn important objects
     data.coins.forEach(this._spawnCoin, this);
-    this._spawnKey(data.key.x, data.key.y);
+    if(this.level == 1){
+        this._spawnKey(data.key.x, data.key.y, 'key_grey');
+        this._spawnKey(data.key_grey.x, data.key_grey.y, 'key_grey');
+    }else{
+    this._spawnKey(data.key.x, data.key.y, 'key');
+    }
     this._spawnDoor(data.door.x, data.door.y);
 
     // enable gravity
@@ -455,8 +475,8 @@ PlayState._spawnCoin = function (coin) {
     sprite.animations.play('rotate');
 };
 
-PlayState._spawnKey = function (x, y) {
-    this.key = this.bgDecoration.create(x, y, 'key');
+PlayState._spawnKey = function (x, y, keyImage) {
+    this.key = this.bgDecoration.create(x, y, keyImage);
     this.key.anchor.set(0.5, 0.5);
     // enable physics to detect collisions, so the hero can pick the key up
     this.game.physics.enable(this.key);
